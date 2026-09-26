@@ -1,0 +1,32 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Temporary images / test outputs
+*.png
+*.jpg
+*.jpeg
+debug_*
+clean_*
+defect_*
+fixed_*
+perfect_*
+pristine_*
+real_*
+test_*
+xiaomi_*
+opel_*
+zoom_*
+
+# Folders ignored
+test_results/
+test_batch_out/
+test_galeria_results/
+test_single/
+demonstracao_final/
+gallery_zooms/
+sample_gallery_previews/
+verification_gallery_batch/
+.vscode/
+.idea/
