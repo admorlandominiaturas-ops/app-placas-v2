@@ -4,14 +4,22 @@ import numpy as np
 from PIL import Image
 from ultralytics import YOLO
 
-# Pre-trained models (both cached locally)
-MODEL_V11_PATH = r"C:\Users\Usuario\.cache\huggingface\hub\models--morsetechlab--yolov11-license-plate-detection\snapshots\251a30d7daedca065f56e04b0af04052c907c68f\license-plate-finetune-v1n.pt"
-MODEL_V8_PATH = r"C:\Users\Usuario\.cache\huggingface\hub\models--joker5914--yolov8n-license-plate\snapshots\8286762929bd4b111a19186f2a05e0a5940b6088\best.pt"
+# Local model files included directly in the project folder
+MODEL_V11_PATH = os.path.join(os.path.dirname(__file__), "models", "yolov11_plate.pt")
+MODEL_V8_PATH = os.path.join(os.path.dirname(__file__), "models", "yolov8_plate.pt")
 
 class PlateCleaner:
-    def __init__(self, m1_path=MODEL_V11_PATH, m2_path=MODEL_V8_PATH):
-        self.m1 = YOLO(m1_path)
-        self.m2 = YOLO(m2_path)
+    def __init__(self, m1_path=None, m2_path=None):
+        path1 = m1_path or MODEL_V11_PATH
+        path2 = m2_path or MODEL_V8_PATH
+
+        if not os.path.exists(path1):
+            raise FileNotFoundError(f"Modelo não encontrado em: {path1}. Certifique-se de enviar a pasta 'models' junto com o projeto.")
+        if not os.path.exists(path2):
+            raise FileNotFoundError(f"Modelo não encontrado em: {path2}. Certifique-se de enviar a pasta 'models' junto com o projeto.")
+
+        self.m1 = YOLO(path1)
+        self.m2 = YOLO(path2)
 
     def detect_plates(self, img_bgr):
         h, w = img_bgr.shape[:2]
