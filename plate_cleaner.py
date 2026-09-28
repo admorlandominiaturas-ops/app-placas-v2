@@ -1,4 +1,31 @@
+import sys
+import subprocess
 import os
+
+def check_and_install_dependencies():
+    required = {
+        "cv2": "opencv-python",
+        "PIL": "pillow",
+        "numpy": "numpy",
+        "ultralytics": "ultralytics"
+    }
+    missing = []
+    for module, pkg in required.items():
+        try:
+            __import__(module)
+        except ImportError:
+            missing.append(pkg)
+    
+    if missing:
+        print(f"Dependências ausentes detectadas: {missing}. Instalando automaticamente...")
+        try:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", *missing])
+            print("Dependências instaladas com sucesso!")
+        except Exception as e:
+            print(f"Erro ao instalar dependências automaticamente: {e}")
+
+check_and_install_dependencies()
+
 import cv2
 import numpy as np
 from PIL import Image
